@@ -580,7 +580,7 @@
 <nav>
   <div class="logo">Sarthya<span>.</span></div>
   <ul class="nav-links">
-    <li><a href="#assessments">🧠 Self Assessments</a></li>
+    <li><a href="#assessments" onclick="openAssessmentSafe('stress')">🧠 Self Assessments</a></li>
     <li><a href="#why">Why Sarthya</a></li>
     <li><a href="#mood">Mood Check-In</a></li>
     <li><a href="#help">Support</a></li>
@@ -638,12 +638,12 @@
       <div class="assessment-badge">Self Assessments</div>
       <h2 class="section-title">Understand yourself before you start the conversation.</h2>
       <p class="section-sub" style="margin-bottom:1.4rem;">Take a quick 5-question check-in for stress, career clarity, relationships, loneliness, growth, or student wellbeing. Get a score and discuss it with Sarthya instantly.</p>
-      <button class="btn-primary" onclick="document.getElementById('help').scrollIntoView({behavior:'smooth'})">Explore Assessments →</button>
+      <button class="btn-primary" onclick="openAssessmentSafe('stress')">Start Assessment →</button>
     </div>
     <div class="assessment-preview">
-      <div class="assessment-preview-card">😰 Stress & Anxiety <span>5 questions</span></div>
-      <div class="assessment-preview-card">🧭 Career Clarity <span>5 questions</span></div>
-      <div class="assessment-preview-card">📚 Student Wellbeing <span>5 questions</span></div>
+      <div class="assessment-preview-card" onclick="openAssessmentSafe('stress')" style="cursor:pointer;">😰 Stress & Anxiety <span>5 questions</span></div>
+      <div class="assessment-preview-card" onclick="openAssessmentSafe('career')" style="cursor:pointer;">🧭 Career Clarity <span>5 questions</span></div>
+      <div class="assessment-preview-card" onclick="openAssessmentSafe('student')" style="cursor:pointer;">📚 Student Wellbeing <span>5 questions</span></div>
     </div>
   </div>
 </section>
