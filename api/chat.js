@@ -1,173 +1,142 @@
+// ─────────────────────────────────────────────────────────────────
+// Sarthya — /api/chat.js
+// Primary: Anthropic Claude API (warm, empathetic AI responses)
+// Fallback: Rule-based system (if API key missing or API down)
+// ─────────────────────────────────────────────────────────────────
+
+// ── FALLBACK: rule-based engine (kept as safety net) ─────────────
 const crisisWords = [
-  "suicide",
-  "kill myself",
-  "end my life",
-  "hurt myself",
-  "self harm",
-  "die",
-  "want to die",
+  "suicide", "kill myself", "end my life", "hurt myself",
+  "self harm", "want to die", "khatam", "marna chahta", "marna chahti"
 ];
 
 const topics = [
-  {
-    name: "exam",
-    words: ["exam", "study", "marks", "neet", "jee", "student", "fail", "syllabus"],
-    replies: [
-      "Exam pressure can make everything feel urgent. Let’s make it smaller: what is the one topic or task creating the most pressure right now?",
-      "You don’t need to finish everything in one breath. Tell me what feels heavier right now — fear of failure, lack of preparation, or pressure from people?",
-      "Studying becomes harder when your mind is scared. Let’s first calm the mind, then plan the next small step. What exam are you preparing for?",
-    ],
-  },
-  {
-    name: "career",
-    words: ["career", "job", "future", "business", "startup", "resign", "salary"],
-    replies: [
-      "Career confusion usually means you care deeply about your future. Let’s not solve your whole life today. Are you confused about choosing, changing, or starting something?",
-      "It sounds like your mind is carrying a lot of future pressure. What feels most scary — failure, money, comparison, or making the wrong choice?",
-      "Let’s bring some clarity. What are the two options you are currently stuck between?",
-    ],
-  },
-  {
-    name: "relationship",
-    words: ["relationship", "love", "breakup", "ex", "girlfriend", "boyfriend", "wife", "husband"],
-    replies: [
-      "Relationships can affect our peace very deeply. Your feelings are valid. Do you want to talk about what happened or what you’re finding hardest to accept?",
-      "That sounds emotionally heavy. Is the pain more about missing the person, feeling misunderstood, or feeling rejected?",
-      "Love and attachment can make the mind very restless. Tell me what happened recently that hurt you the most.",
-    ],
-  },
-  {
-    name: "stress",
-    words: ["stress", "pressure", "overwhelmed", "tired", "burnout", "exhausted"],
-    replies: [
-      "That sounds really overwhelming. Let’s slow it down together. Is this stress coming more from work, studies, people, money, or your own expectations?",
-      "You’ve probably been holding too much for too long. What is the biggest thing weighing on you today?",
-      "When everything feels heavy, we don’t need a perfect solution immediately. We need one small next step. What feels most urgent right now?",
-    ],
-  },
-  {
-    name: "anxiety",
-    words: ["anxiety", "panic", "fear", "scared", "worried", "overthinking"],
-    replies: [
-      "Anxiety can make even small things feel dangerous. You’re not weak for feeling this. What thought keeps repeating in your mind?",
-      "Let’s slow the loop. Take one breath and tell me — is this fear about something happening now, or something that might happen later?",
-      "Overthinking often tries to protect us, but it can exhaust us. What is the main question your mind keeps asking again and again?",
-    ],
-  },
-  {
-    name: "loneliness",
-    words: ["lonely", "alone", "no one", "ignored", "empty"],
-    replies: [
-      "I’m sorry you’re feeling alone. Loneliness can hurt even when people are around. When do you feel it the most — at night, during work, or when you see others?",
-      "That empty feeling can be very painful. I’m here with you. Did something happen today that made you feel unseen?",
-      "Feeling alone doesn’t mean you are unworthy of connection. Tell me — do you miss a person, a phase of life, or the feeling of being understood?",
-    ],
-  },
-  {
-    name: "confidence",
-    words: ["confidence", "insecure", "not good enough", "ugly", "failure", "worthless"],
-    replies: [
-      "Low confidence can make you doubt even your real strengths. Where do you feel ‘not enough’ the most — looks, studies, work, communication, or relationships?",
-      "I hear that self-doubt. But one difficult phase is not your full identity. What made you feel this way recently?",
-      "Confidence is rebuilt through small proof, not pressure. What is one small thing you handled well recently, even if it was tiny?",
-    ],
-  },
-  {
-    name: "family",
-    words: ["family", "parents", "mother", "father", "home", "marriage"],
-    replies: [
-      "Family pressure can feel painful because we want love and freedom at the same time. Is the pressure about career, money, marriage, expectations, or control?",
-      "That sounds emotionally complicated. With family, even small conflicts can feel heavy. What do you wish they understood about you?",
-      "You can love your family and still feel hurt by them. What happened recently?",
-    ],
-  },
-  {
-    name: "work",
-    words: ["work", "office", "manager", "boss", "colleague", "company"],
-    replies: [
-      "Work pressure can slowly become emotional exhaustion. Is the weight coming from workload, your manager, office politics, lack of growth, or fear of instability?",
-      "That sounds draining. What part of work is affecting your peace the most right now?",
-      "Sometimes professional stress becomes personal pain. What are you carrying after office hours that you can’t switch off from?",
-    ],
-  },
-  {
-    name: "sleep",
-    words: ["sleep", "insomnia", "can't sleep", "night", "awake"],
-    replies: [
-      "Sleep becomes difficult when the mind feels unfinished. What usually keeps you awake — overthinking, phone use, fear, or body restlessness?",
-      "Your body may be tired but your mind may still be alert. What thought becomes loudest at night?",
-      "Tonight, don’t fight your thoughts. Try writing the top three worries on paper. What is the main worry disturbing your sleep?",
-    ],
-  },
+  { name: "exam", words: ["exam", "study", "marks", "neet", "jee", "student", "fail", "syllabus"], replies: ["Exam pressure can make everything feel urgent. What is the one subject or topic creating the most stress right now?", "You don't need to solve everything today. Tell me — is the fear more about the exam itself, or the expectations of people around you?"] },
+  { name: "career", words: ["career", "job", "future", "business", "startup", "resign", "salary"], replies: ["Career confusion usually means you care deeply about your future. Are you stuck between choices, thinking of a change, or unsure where to start?", "What feels scariest right now — failure, money, comparison, or making the wrong choice?"] },
+  { name: "relationship", words: ["relationship", "love", "breakup", "ex", "girlfriend", "boyfriend", "wife", "husband", "partner"], replies: ["Relationships can affect our peace very deeply. Your feelings are valid. Do you want to talk about what happened, or what you're finding hardest to accept?", "Is the pain more about missing the person, feeling misunderstood, or feeling rejected?"] },
+  { name: "stress", words: ["stress", "pressure", "overwhelmed", "tired", "burnout", "exhausted"], replies: ["That sounds really heavy. Is this stress coming more from work, studies, people, money, or your own expectations?", "You've probably been holding too much for too long. What is the biggest thing weighing on you today?"] },
+  { name: "anxiety", words: ["anxiety", "panic", "fear", "scared", "worried", "overthinking"], replies: ["Anxiety can make even small things feel dangerous. You're not weak for feeling this. What thought keeps repeating in your mind?", "Is this fear about something happening now, or something that might happen later?"] },
+  { name: "loneliness", words: ["lonely", "alone", "no one", "ignored", "empty", "isolated"], replies: ["I'm here with you. Loneliness can hurt even when people are around. When do you feel it most — at night, during the day, or when you see others?", "That empty feeling is real and painful. Did something happen today that made you feel unseen?"] },
+  { name: "grief", words: ["lost", "died", "death", "grief", "miss", "gone", "passed away", "bereaved"], replies: ["Losing someone is one of the hardest things a person can go through. There is no right way to grieve. What do you miss most about them?", "Grief doesn't follow a timeline. I'm here with you in this. Would you like to talk about them, or about how you've been coping?"] },
+  { name: "trauma", words: ["trauma", "ptsd", "flashback", "nightmare", "abuse", "assault", "past", "haunt"], replies: ["What you went through matters, and so does how it still affects you. You don't have to share everything at once — just what feels okay to share.", "Healing from painful past experiences takes real courage. Are you looking to understand what you're feeling, or are you looking for ways to cope?"] },
 ];
 
 const followUps = [
-  "I’m listening. Tell me a little more.",
-  "That makes sense. What part of this hurts the most?",
-  "You don’t have to explain it perfectly. Start wherever it feels easiest.",
-  "That sounds important. What happened just before you started feeling this way?",
-  "Let’s take it slowly. What do you need most right now — clarity, comfort, courage, or a plan?",
+  "I'm listening. Tell me a little more.",
+  "That makes sense. What part of this hurts the most right now?",
+  "You don't have to explain it perfectly. Start wherever feels easiest.",
+  "Let's take it slowly. What do you need most right now — clarity, comfort, or just to be heard?",
+  "I'm here with you. What would feel like even a small relief today?",
 ];
 
-function includesAny(text, words) {
-  return words.some((word) => text.includes(word));
-}
+function includesAny(text, words) { return words.some(w => text.includes(w)); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-function pick(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function detectTopics(text) {
-  return topics.filter((topic) => includesAny(text, topic.words));
-}
-
-function buildReply(text, previousMessages) {
+function fallbackReply(text, previousMessages) {
   if (includesAny(text, crisisWords)) {
-    return "I’m really sorry you’re feeling this much pain. Please don’t stay alone with this right now. If you feel you might hurt yourself or you’re in immediate danger, call local emergency services or reach out to someone near you immediately. In India, you can contact iCall at 9152987821. You deserve immediate human support.";
+    return "I'm really sorry you're feeling this much pain right now. Please don't stay alone with this. If you feel you might hurt yourself, please contact someone near you or call iCall at 9152987821 (India). You deserve immediate human support — this matters deeply.";
   }
-
-  if (!text || text.length < 3) {
-    return "I’m here with you 🌿 You can start with just one word — stressed, sad, confused, angry, lonely, or tired.";
-  }
-
-  const matched = detectTopics(text);
-
-  if (matched.length >= 2) {
-    const first = matched[0];
-    const second = matched[1];
-
-    return (
-      pick(first.replies) +
-      " I’m also sensing there may be another layer around " +
-      second.name +
-      ". Let’s handle this gently — which part feels heavier right now?"
-    );
-  }
-
-  if (matched.length === 1) {
-    return pick(matched[0].replies);
-  }
-
-  if (previousMessages.length > 4) {
-    return (
-      pick(followUps) +
-      " From what you’ve shared, it sounds like this has been sitting with you for a while. What would feel like relief today — talking, planning, or just being understood?"
-    );
-  }
-
+  if (!text || text.length < 3) return "I'm here with you 🌿 You can start with just one word — stressed, sad, confused, tired, or lonely.";
+  const matched = topics.filter(t => includesAny(text, t.words));
+  if (matched.length >= 2) return pick(matched[0].replies) + " I'm also sensing something around " + matched[1].name + ". Which feels heavier right now?";
+  if (matched.length === 1) return pick(matched[0].replies);
+  if (previousMessages.length > 4) return pick(followUps) + " From what you've shared, this seems like it's been with you a while. I'm not going anywhere.";
   return pick(followUps);
 }
 
+// ── SYSTEM PROMPT for Claude ──────────────────────────────────────
+const SYSTEM_PROMPT = `You are Sarthya, a warm and deeply empathetic AI mental wellness companion built for students and professionals in India. You were created to be a safe, non-judgemental first space for people dealing with stress, anxiety, loneliness, career confusion, relationships, grief, trauma, and personal growth.
+
+Your personality and communication style:
+- Warm, gentle, and deeply human — never clinical, robotic, or formal
+- You speak like a wise, caring friend who truly listens — not like a therapist reading from a manual
+- Use simple, clear language. Many users may be more comfortable with casual English or Hinglish — match their tone naturally
+- Keep responses to 3–5 sentences unless the person has shared something complex that genuinely needs more
+- Always validate feelings FIRST before offering any reflection or gentle question
+- Ask ONE thoughtful follow-up question at the end of your response to deepen the conversation
+- Never give medical diagnoses, prescribe treatments, or make clinical assessments
+- Never be dismissive, toxic-positive, or offer hollow reassurance like "everything will be fine"
+- Use occasional gentle emojis (🌿 🌱 💙) — sparingly and naturally, never excessively
+
+Crisis protocol (CRITICAL):
+- If the user expresses suicidal ideation, self-harm, or immediate danger — immediately and clearly provide: iCall: 9152987821 and Vandrevala Foundation: 1860-2662-345. Do not continue the normal conversation flow. Express genuine care and urge them to call.
+
+Topics you support deeply:
+- Stress and anxiety (academic, professional, financial)
+- Career confusion, burnout, workplace stress
+- Relationships, breakups, loneliness
+- Grief and personal loss
+- Trauma and PTSD (always with extra gentleness — encourage professional support)
+- Personal growth, confidence, habits
+- Student life — exams, comparison, pressure, identity
+- Family pressure, marriage expectations, societal comparisons
+
+Cultural context:
+- You understand the Indian context — pressure of competitive exams like JEE/NEET, family expectations around marriage and career, societal comparison culture, and the stigma around mental health. You gently acknowledge these realities.
+- You never shame anyone for their background, choices, or feelings.
+
+You are NOT a general assistant. If asked about coding, news, recipes, or anything unrelated to emotional wellbeing — kindly and warmly redirect: "I'm here mainly for your emotional wellbeing 🌿 For that I'd love to keep listening. Is there something on your heart today?"`;
+
+// ── MAIN HANDLER ─────────────────────────────────────────────────
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   const { messages = [] } = req.body || {};
-  const lastMessage = messages[messages.length - 1]?.content || "";
-  const text = lastMessage.toLowerCase();
 
-  const reply = buildReply(text, messages);
+  // Quick crisis check before API call
+  const lastMsg = (messages[messages.length - 1]?.content || "").toLowerCase();
+  if (crisisWords.some(w => lastMsg.includes(w))) {
+    return res.status(200).json({
+      reply: "I'm really sorry you're feeling this much pain right now. Please don't stay alone with this. Reach out to iCall at 9152987821 or Vandrevala Foundation at 1860-2662-345 — trained counselors are there for you right now. You deserve real human support and you matter deeply. 💙"
+    });
+  }
 
-  return res.status(200).json({ reply });
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  // ── No API key → use fallback ────────────────────────────────
+  if (!apiKey) {
+    const text = lastMsg;
+    const reply = fallbackReply(text, messages);
+    return res.status(200).json({ reply });
+  }
+
+  // ── Call Anthropic API ───────────────────────────────────────
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1024,
+        system: SYSTEM_PROMPT,
+        messages: messages.map(m => ({
+          role: m.role,
+          content: m.content
+        }))
+      }),
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      console.error("Anthropic API error:", err);
+      // Graceful fallback if API fails
+      return res.status(200).json({ reply: fallbackReply(lastMsg, messages) });
+    }
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || fallbackReply(lastMsg, messages);
+
+    return res.status(200).json({ reply });
+
+  } catch (error) {
+    console.error("Chat handler error:", error);
+    // Graceful fallback on network error
+    return res.status(200).json({ reply: fallbackReply(lastMsg, messages) });
+  }
 }
