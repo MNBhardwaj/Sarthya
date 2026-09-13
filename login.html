@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sarthyaa – Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green-dark:#2d5a3d;
+  --green-mid:#4a7c5a;
+  --green-light:#7aaa8a;
+  --cream:#f5f0e8;
+  --cream-dark:#ede6d6;
+  --gold:#c9a84c;
+  --ink:#1a2e1f;
+  --ink-soft:#3d5245;
+  --muted:#7a9080;
+  --border:#d4e0d8;
+  --white:#ffffff;
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--cream);
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* ── LEFT PANEL ── */
+.left{
+  background:var(--green-dark);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:60px;
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+}
+.left::before{
+  content:'';
+  position:absolute;
+  width:500px;height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(74,124,90,.3) 0%,transparent 70%);
+  top:-150px;right:-150px;
+}
+.left::after{
+  content:'';
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.1) 0%,transparent 70%);
+  bottom:-80px;left:-60px;
+}
+.left-content{position:relative;z-index:1;}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:52px;}
+.brand-logo{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.brand-logo img{width:36px;height:36px;object-fit:contain;}
+.brand-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:600;
+  color:white;letter-spacing:.02em;
+}
+.left-h{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,3.5vw,3.2rem);
+  font-weight:500;color:white;
+  line-height:1.15;margin-bottom:20px;
+}
+.left-h em{font-style:italic;color:var(--green-light);}
+.left-p{
+  font-size:.95rem;color:rgba(255,255,255,.55);
+  line-height:1.75;font-weight:300;
+  max-width:380px;margin-bottom:48px;
+}
+.testimonial{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:24px 28px;
+}
+.testi-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;
+  color:rgba(255,255,255,.85);
+  line-height:1.6;margin-bottom:16px;
+}
+.testi-author{font-size:.8rem;color:rgba(255,255,255,.4);}
+.testi-dot{
+  display:inline-block;width:6px;height:6px;
+  border-radius:50%;background:var(--gold);
+  margin-right:8px;vertical-align:middle;
+}
+
+/* ── RIGHT PANEL ── */
+.right{
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  padding:60px 48px;background:var(--cream);
+}
+.auth-card{width:100%;max-width:420px;}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:0;margin-bottom:36px;
+  background:var(--cream-dark);
+  border-radius:100px;padding:4px;
+}
+.tab{
+  flex:1;text-align:center;
+  padding:10px;border-radius:100px;
+  font-size:.85rem;font-weight:500;
+  cursor:pointer;color:var(--muted);
+  transition:all .2s;border:none;background:none;
+  font-family:'Inter',sans-serif;
+}
+.tab.active{
+  background:white;color:var(--green-dark);
+  box-shadow:0 1px 4px rgba(0,0,0,.08);
+}
+
+/* Form */
+.form-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.9rem;font-weight:500;
+  color:var(--green-dark);margin-bottom:6px;
+}
+.form-sub{
+  font-size:.88rem;color:var(--muted);
+  margin-bottom:28px;font-weight:300;
+}
+.form-group{margin-bottom:16px;}
+.form-group label{
+  display:block;font-size:.78rem;font-weight:500;
+  color:var(--ink);letter-spacing:.05em;
+  text-transform:uppercase;margin-bottom:7px;
+}
+.form-group input{
+  width:100%;padding:13px 16px;
+  border:1.5px solid var(--border);
+  border-radius:12px;font-size:.92rem;
+  font-family:'Inter',sans-serif;
+  color:var(--ink);background:white;
+  outline:none;transition:border-color .2s;
+}
+.form-group input:focus{border-color:var(--green-mid);}
+.form-group input::placeholder{color:#b0bdb3;}
+
+/* Phone row */
+.phone-row{display:flex;gap:8px;}
+.country-select{
+  width:90px;flex-shrink:0;
+  padding:13px 10px;
+  border:1.5px solid var(--border);
+  border-radius:12px;font-size:.88rem;
+  font-family:'Inter',sans-serif;
+  color:var(--ink);background:white;
+  outline:none;cursor:pointer;
+}
+
+/* Buttons */
+.btn{
+  width:100%;padding:14px;border-radius:100px;
+  font-size:.92rem;font-weight:500;
+  font-family:'Inter',sans-serif;
+  cursor:pointer;border:none;
+  transition:all .2s;margin-bottom:12px;
+}
+.btn-primary{background:var(--green-dark);color:white;}
+.btn-primary:hover{background:var(--green-mid);}
+.btn-google{
+  background:white;color:var(--ink);
+  border:1.5px solid var(--border);
+  display:flex;align-items:center;
+  justify-content:center;gap:10px;
+}
+.btn-google:hover{background:var(--cream-dark);border-color:var(--green-light);}
+.btn-otp{
+  background:var(--cream-dark);color:var(--green-dark);
+  border:1.5px solid var(--border);
+}
+.btn-otp:hover{background:var(--border);}
+.btn-verify{background:var(--green-mid);color:white;margin-top:10px;}
+.btn-verify:hover{background:var(--green-dark);}
+
+/* Divider */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:16px 0;
+}
+.div-line{flex:1;height:1px;background:var(--border);}
+.div-text{font-size:.78rem;color:var(--muted);}
+
+/* OTP section */
+.otp-section{display:none;margin-top:16px;}
+.otp-section.show{display:block;}
+.otp-verify{display:none;margin-top:12px;}
+.otp-verify.show{display:block;}
+
+/* Messages */
+.msg{
+  font-size:.82rem;margin-top:10px;margin-bottom:8px;
+  padding:10px 14px;border-radius:10px;display:none;
+}
+.msg.error{background:#fef0f0;color:#c0392b;border:1px solid #fac5c5;display:block;}
+.msg.success{background:#f0faf2;color:#27ae60;border:1px solid #b8e6c4;display:block;}
+
+/* Footer */
+.footer-note{
+  margin-top:24px;text-align:center;
+  font-size:.75rem;color:var(--muted);
+  line-height:1.7;
+}
+.footer-note a{color:var(--green-mid);text-decoration:none;}
+.back-link{
+  display:block;text-align:center;
+  font-size:.82rem;color:var(--muted);
+  text-decoration:none;margin-top:20px;
+  transition:color .2s;
+}
+.back-link:hover{color:var(--green-dark);}
+
+/* Responsive */
+@media(max-width:768px){
+  body{grid-template-columns:1fr;}
+  .left{display:none;}
+  .right{padding:40px 24px;min-height:100vh;}
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-content">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="https://sarthya.vercel.app/assets/logo-chariot.png" alt="Sarthyaa"/>
+      </div>
+      <div class="brand-name">Sarthyaa</div>
+    </div>
+    <h1 class="left-h">Your saarthi<br/>through life's<br/><em>harder journeys.</em></h1>
+    <p class="left-p">Sarthyaa remembers your story — your goals, your struggles, your wins. Every session picks up exactly where the last one left.</p>
+    <div class="testimonial">
+      <div class="testi-text">"I felt heard for the first time in months. Sarthyaa didn't try to fix me — it just sat with me."</div>
+      <div class="testi-author"><span class="testi-dot"></span>Riya S., Graduate student, Delhi</div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="auth-card">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('signin')">Sign In</button>
+      <button class="tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div id="signin-form">
+      <div class="form-title">Welcome back.</div>
+      <div class="form-sub">Continue your journey with Sarthyaa.</div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="si-email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="si-password" placeholder="Your password"/>
+      </div>
+      <div id="si-msg" class="msg"></div>
+      <button class="btn btn-primary" onclick="signIn()">Sign In</button>
+
+      <div class="divider"><div class="div-line"></div><span class="div-text">or continue with</span><div class="div-line"></div></div>
+
+      <button class="btn btn-google" onclick="signInGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+
+      <button class="btn btn-otp" onclick="toggleOTP('si')">📱 Continue with Phone OTP</button>
+
+      <div class="otp-section" id="si-otp">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <div class="phone-row">
+            <select class="country-select" id="si-country">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+            </select>
+            <input type="tel" id="si-phone" placeholder="9876543210" style="flex:1;"/>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="sendOTP('si')">Send OTP</button>
+        <div class="otp-verify" id="si-otp-verify">
+          <div class="form-group" style="margin-top:4px;">
+            <label>Enter OTP</label>
+            <input type="text" id="si-otp-code" placeholder="6-digit code" maxlength="6"/>
+          </div>
+          <button class="btn btn-verify" onclick="verifyOTP('si')">Verify & Sign In</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGN UP -->
+    <div id="signup-form" style="display:none;">
+      <div class="form-title">Begin your journey.</div>
+      <div class="form-sub">Sarthyaa will remember everything you share.</div>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="su-name" placeholder="What should Sarthyaa call you?"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="su-email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="su-password" placeholder="Min 8 characters"/>
+      </div>
+      <div id="su-msg" class="msg"></div>
+      <button class="btn btn-primary" onclick="signUp()">Create Account</button>
+
+      <div class="divider"><div class="div-line"></div><span class="div-text">or continue with</span><div class="div-line"></div></div>
+
+      <button class="btn btn-google" onclick="signInGoogle()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Sign up with Google
+      </button>
+
+      <button class="btn btn-otp" onclick="toggleOTP('su')">📱 Sign up with Phone OTP</button>
+
+      <div class="otp-section" id="su-otp">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <div class="phone-row">
+            <select class="country-select" id="su-country">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+            </select>
+            <input type="tel" id="su-phone" placeholder="9876543210" style="flex:1;"/>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="sendOTP('su')">Send OTP</button>
+        <div class="otp-verify" id="su-otp-verify">
+          <div class="form-group" style="margin-top:4px;">
+            <label>Enter OTP</label>
+            <input type="text" id="su-otp-code" placeholder="6-digit code" maxlength="6"/>
+          </div>
+          <button class="btn btn-verify" onclick="verifyOTP('su')">Verify & Create Account</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      By continuing, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.<br/>
+      Your conversations are private and your data is never sold.
+    </div>
+    <a href="/" class="back-link">← Back to Sarthyaa</a>
+  </div>
+</div>
+
+<script>
+// ── SUPABASE INIT ──
+const SUPABASE_URL = 'https://mgmqckeyfrpmzmvsdisg.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY_HERE';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── TAB SWITCH ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', (i===0&&tab==='signin')||(i===1&&tab==='signup'));
+  });
+  document.getElementById('signin-form').style.display = tab==='signin'?'block':'none';
+  document.getElementById('signup-form').style.display = tab==='signup'?'block':'none';
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'msg ' + type;
+}
+
+// ── EMAIL SIGN IN ──
+async function signIn() {
+  const email = document.getElementById('si-email').value.trim();
+  const pass  = document.getElementById('si-password').value;
+  if (!email || !pass) return showMsg('si-msg', 'Please fill in all fields.', 'error');
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if (error) return showMsg('si-msg', error.message, 'error');
+  showMsg('si-msg', 'Signed in! Redirecting...', 'success');
+  setTimeout(() => window.location.href = '/', 1200);
+}
+
+// ── EMAIL SIGN UP ──
+async function signUp() {
+  const name  = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass  = document.getElementById('su-password').value;
+  if (!name || !email || !pass) return showMsg('su-msg', 'Please fill in all fields.', 'error');
+  if (pass.length < 8) return showMsg('su-msg', 'Password must be at least 8 characters.', 'error');
+  const { error } = await sb.auth.signUp({
+    email, password: pass,
+    options: { data: { full_name: name } }
+  });
+  if (error) return showMsg('su-msg', error.message, 'error');
+  showMsg('su-msg', '🌿 Account created! Check your email to confirm.', 'success');
+}
+
+// ── GOOGLE ──
+async function signInGoogle() {
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin }
+  });
+  if (error) alert(error.message);
+}
+
+// ── PHONE OTP ──
+function toggleOTP(prefix) {
+  const el = document.getElementById(prefix + '-otp');
+  el.classList.toggle('show');
+}
+
+async function sendOTP(prefix) {
+  const country = document.getElementById(prefix + '-country').value;
+  const phone   = document.getElementById(prefix + '-phone').value.trim();
+  if (!phone) return alert('Please enter your phone number.');
+  const fullPhone = country + phone;
+  const { error } = await sb.auth.signInWithOtp({ phone: fullPhone });
+  if (error) return alert(error.message);
+  document.getElementById(prefix + '-otp-verify').classList.add('show');
+  alert('OTP sent to ' + fullPhone);
+}
+
+async function verifyOTP(prefix) {
+  const country = document.getElementById(prefix + '-country').value;
+  const phone   = document.getElementById(prefix + '-phone').value.trim();
+  const token   = document.getElementById(prefix + '-otp-code').value.trim();
+  const fullPhone = country + phone;
+  const { error } = await sb.auth.verifyOtp({ phone: fullPhone, token, type: 'sms' });
+  if (error) return alert(error.message);
+  window.location.href = '/';
+}
+
+// ── CHECK IF ALREADY LOGGED IN ──
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = '/';
+});
+</script>
+</body>
+</html>
