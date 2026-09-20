@@ -184,98 +184,79 @@
   </div>
 
   <div id="how" style="padding:clamp(56px,8vh,96px) clamp(20px,4vw,56px); background:#FAF7F1; border-top:1px solid rgba(46,70,53,0.06)">
+    <style>
+      .how-row{display:grid;grid-template-columns:64px 1fr;gap:24px;padding:26px 0;border-top:1px solid rgba(46,70,53,0.1);opacity:0;transform:translateY(6px);transition:opacity 0.5s cubic-bezier(0.22,1,0.36,1),transform 0.5s cubic-bezier(0.22,1,0.36,1),background 0.2s;}
+      .how-row:last-child{border-bottom:1px solid rgba(46,70,53,0.1);}
+      .how-row:hover{transform:translateY(-3px)!important;background:rgba(46,70,53,0.03);border-radius:14px;padding-left:12px;padding-right:12px;margin-left:-12px;margin-right:-12px;}
+      .how-num{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#C2A265;line-height:1;transition:color 0.2s;}
+      .how-row:hover .how-num{color:#A07820;}
+      .how-title{font-size:18px;color:#2B3A30;margin-bottom:7px;transition:color 0.2s;}
+      .how-row:hover .how-title{color:#1C2E22;}
+    </style>
     <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(32px,5vw,72px); align-items:start">
       <div style="max-width:400px">
         <div style="font-size:12.5px; letter-spacing:0.3em; text-transform:uppercase; color:#4A5C50">How it works</div>
         <div style="width:44px; height:1.5px; background:#C2A265; margin:13px 0 20px"></div>
-        <h2 style="margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-size:clamp(30px,3.8vw,46px); font-weight:600; line-height:1.1; letter-spacing:-0.5px; color:#2B3A30">Simple, warm, and always available.</h2>
-        <p style="margin:0 0 28px; font-size:15.5px; line-height:1.8; color:#5C6B60">Start talking in seconds. No sign-up friction, no cold intake forms. Just a conversation that meets you where you are.</p>
-        <div onclick="SA.startChat()" style="display:inline-flex; white-space:nowrap; align-items:center; gap:11px; padding:15px 30px; border-radius:999px; background:#2E4635; color:#F6F2E9; font-size:15px; cursor:pointer; box-shadow:0 10px 26px rgba(46,70,53,0.2); transition:background 0.3s ease, transform 0.3s ease" style-hover="background:#3C5A44; transform:translateY(-2px)">Begin Your Journey <span style="font-size:14px">→</span></div>
+        <h2 style="margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-size:clamp(30px,3.8vw,46px); font-weight:600; line-height:1.1; letter-spacing:-0.5px; color:#2B3A30">Guidance begins with a conversation.</h2>
+        <p style="margin:0 0 28px; font-size:15.5px; line-height:1.8; color:#5C6B60">No forms. No pressure. No need to know exactly what you're looking for. Start where you are, and Sarthyaa helps you find the next step.</p>
+        <div onclick="SA.startChat()" style="display:inline-flex; white-space:nowrap; align-items:center; gap:11px; padding:15px 30px; border-radius:999px; background:#2E4635; color:#F6F2E9; font-size:15px; cursor:pointer; box-shadow:0 10px 26px rgba(46,70,53,0.2); transition:background 0.3s ease, transform 0.3s ease" style-hover="background:#3C5A44; transform:translateY(-2px)">Start a Conversation <span style="font-size:14px">→</span></div>
       </div>
-      <div style="display:grid">
-        <div style="display:grid; grid-template-columns:64px 1fr; gap:24px; padding:26px 0; border-top:1px solid rgba(46,70,53,0.1)">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; color:#C2A265; line-height:1">01</div>
-          <div>
-            <div style="font-size:18px; color:#2B3A30; margin-bottom:7px">Open a conversation</div>
-            <div style="font-size:15px; line-height:1.75; color:#5C6B60">Start chatting with Sarthya anytime — morning, midnight, or in between.</div>
-          </div>
-        </div>
-        <div style="display:grid; grid-template-columns:64px 1fr; gap:24px; padding:26px 0; border-top:1px solid rgba(46,70,53,0.1)">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; color:#C2A265; line-height:1">02</div>
-          <div>
-            <div style="font-size:18px; color:#2B3A30; margin-bottom:7px">Share what's on your mind</div>
-            <div style="font-size:15px; line-height:1.75; color:#5C6B60">No script, no structure. Just talk. Sarthya listens, reflects, and gently guides.</div>
-          </div>
-        </div>
-        <div style="display:grid; grid-template-columns:64px 1fr; gap:24px; padding:26px 0; border-top:1px solid rgba(46,70,53,0.1); border-bottom:1px solid rgba(46,70,53,0.1)">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; color:#C2A265; line-height:1">03</div>
-          <div>
-            <div style="font-size:18px; color:#2B3A30; margin-bottom:7px">Grow with tools &amp; people</div>
-            <div style="font-size:15px; line-height:1.75; color:#5C6B60">Access wellness tools, and connect with real counselors when you need deeper support.</div>
-          </div>
-        </div>
+      <div id="how-steps">
+        <div class="how-row"><div class="how-num">01</div><div><div class="how-title">Start where you are</div><div style="font-size:15px; line-height:1.75; color:#5C6B60">Open Sarthyaa whenever something is on your mind — big, small, clear or difficult to explain.</div></div></div>
+        <div class="how-row" style="transition-delay:0.15s"><div class="how-num">02</div><div><div class="how-title">Talk. Reflect. Find clarity.</div><div style="font-size:15px; line-height:1.75; color:#5C6B60">There is no script to follow. Sarthyaa listens, understands the context and helps you see things more clearly.</div></div></div>
+        <div class="how-row" style="transition-delay:0.3s"><div class="how-num">03</div><div><div class="how-title">Get the support that fits</div><div style="font-size:15px; line-height:1.75; color:#5C6B60">Continue with AI tools, mood tracking and journaling, connect with a Sarthyaa Buddy, or speak with a qualified professional when deeper support is needed.</div></div></div>
       </div>
     </div>
   </div>
 
-  <div id="assessments" style="padding:clamp(56px,8vh,96px) clamp(20px,4vw,56px); background:#F6F3EB; border-top:1px solid rgba(46,70,53,0.06)">
+  <div id="assessments" style="padding:clamp(56px,8vh,96px) clamp(20px,4vw,56px); background:url('assets/background4.png') center/cover no-repeat; background-color:#F6F3EB; border-top:1px solid rgba(46,70,53,0.06)">
+    <style>
+      .sa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:20px;}
+      .sa-card{background:#FFFFFF;border-radius:20px;border:1px solid rgba(46,70,53,0.08);overflow:hidden;cursor:pointer;transition:transform 0.3s cubic-bezier(0.22,1,0.36,1),box-shadow 0.3s cubic-bezier(0.22,1,0.36,1);display:flex;flex-direction:column;}
+      .sa-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(46,70,53,0.14);}
+      .sa-img-wrap{width:100%;height:140px;overflow:hidden;}
+      .sa-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);}
+      .sa-card:hover .sa-img{transform:scale(1.05);}
+      .sa-body{padding:20px 20px 22px;flex:1;display:flex;flex-direction:column;}
+      .sa-icon{width:44px;height:44px;margin-bottom:14px;display:block;object-fit:contain;}
+      .sa-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:#2B3A30;margin-bottom:8px;line-height:1.2;}
+      .sa-desc{font-size:13.5px;line-height:1.65;color:#5C6B60;font-weight:300;flex:1;margin-bottom:16px;}
+      .sa-link{font-size:13px;color:#C2A265;font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:color 0.2s,gap 0.2s;}
+      .sa-card:hover .sa-link{color:#A07820;gap:10px;}
+      .sa-bottom{display:flex;align-items:center;gap:20px;padding:24px 28px;background:rgba(46,70,53,0.04);border:1px solid rgba(46,70,53,0.1);border-radius:16px;margin-top:8px;}
+      .sa-bottom-icon{width:48px;height:48px;background:rgba(46,70,53,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+      .sa-bottom-text{flex:1;}
+      .sa-bottom-title{font-size:16px;font-weight:500;color:#2B3A30;margin-bottom:4px;}
+      .sa-bottom-desc{font-size:14px;color:#5C6B60;font-weight:300;}
+      .sa-bottom-btn{padding:14px 28px;border-radius:999px;background:#2E4635;color:#F6F2E9;font-size:14px;cursor:pointer;flex-shrink:0;transition:background 0.2s;border:none;font-family:inherit;}
+      .sa-bottom-btn:hover{background:#3C5A44;}
+      @media(max-width:900px){.sa-grid{grid-template-columns:repeat(2,1fr);}}
+      @media(max-width:520px){.sa-grid{grid-template-columns:1fr;}}
+    </style>
     <div style="max-width:1280px; margin:0 auto">
       <div style="max-width:620px; margin-bottom:clamp(28px,4vh,44px)">
-        <div style="font-size:12.5px; letter-spacing:0.3em; text-transform:uppercase; color:#4A5C50">Self assessments</div>
+        <div style="font-size:12.5px; letter-spacing:0.3em; text-transform:uppercase; color:#4A5C50">Explore &amp; Reflect</div>
         <div style="width:44px; height:1.5px; background:#C2A265; margin:13px 0 20px"></div>
-        <h2 style="margin:0 0 14px; font-family:'Cormorant Garamond',serif; font-size:clamp(30px,3.8vw,46px); font-weight:600; line-height:1.1; letter-spacing:-0.5px; color:#2B3A30">Understand yourself before you start the conversation.</h2>
+        <h2 style="margin:0; font-family:'Cormorant Garamond',serif; font-size:clamp(30px,3.8vw,46px); font-weight:600; line-height:1.1; letter-spacing:-0.5px; color:#2B3A30">What would you like to explore today?</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr)); gap:16px">
-        <div onclick="SA.openStress()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:2px;left:1px;width:22px;height:13px;border:1.7px solid #3E6147;border-radius:7px"></div><div style="position:absolute;top:17px;left:5px;width:5px;height:0;border-top:1.5px solid #3E6147;transform:rotate(74deg)"></div><div style="position:absolute;top:17px;left:12px;width:5px;height:0;border-top:1.5px solid #3E6147;transform:rotate(74deg)"></div><div style="position:absolute;top:17px;left:19px;width:5px;height:0;border-top:1.5px solid #3E6147;transform:rotate(74deg)"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Stress &amp; Anxiety</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Build coping strategies and find calm amid chaos</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openCareer()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:0px;left:0px;width:24px;height:24px;border-radius:999px;border:1.7px solid #3E6147"></div><div style="position:absolute;top:11px;left:4px;width:16px;height:0;border-top:1.7px solid #3E6147;transform:rotate(-38deg)"></div><div style="position:absolute;top:10px;left:10px;width:4px;height:4px;border-radius:999px;background:#3E6147"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Career Confusion</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Clarify your path and find direction with confidence</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openRelationship()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:5px;left:0px;width:14px;height:14px;border-radius:999px;border:1.7px solid #3E6147"></div><div style="position:absolute;top:5px;left:8px;width:14px;height:14px;border-radius:999px;border:1.7px solid #3E6147"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Relationships</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Navigate bonds, boundaries, and heartbreak together</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openLoneliness()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:2px;left:0px;width:18px;height:18px;border-radius:999px;border:1.7px solid #3E6147"></div><div style="position:absolute;top:16px;left:17px;width:7px;height:7px;border-radius:999px;border:1.7px solid #3E6147"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Loneliness</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Feel heard, connected, and less alone in the world</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openGrowth()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:8px;left:11px;width:0;height:15px;border-left:1.7px solid #3E6147"></div><div style="position:absolute;top:2px;left:12px;width:11px;height:11px;border:1.7px solid #3E6147;border-radius:0 100% 0 100%"></div><div style="position:absolute;top:8px;left:2px;width:9px;height:9px;border:1.7px solid #3E6147;border-radius:100% 0 100% 0"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Personal Growth</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Build habits, resilience, and the life you want</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openStudent()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:2px;left:6px;width:11px;height:11px;border:1.7px solid #3E6147;transform:rotate(45deg)"></div><div style="position:absolute;top:17px;left:5px;width:14px;height:0;border-top:1.7px solid #3E6147"></div><div style="position:absolute;top:17px;left:19px;width:0;height:5px;border-left:1.5px solid #3E6147"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Student Life</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Exams, pressure, identity — all of it, together</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openLoss()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;border:1.7px solid #3E6147;border-radius:50% 50% 50% 2px;transform:rotate(-45deg)"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Personal Loss &amp; Grief</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Losing someone you love is one of the hardest things. You don't have to grieve alone.</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
-        <div onclick="SA.openPtsd()" style="background:#FFFFFF; border:1px solid rgba(46,70,53,0.08); border-radius:22px; padding:24px; cursor:pointer; transition:transform 0.3s ease, box-shadow 0.3s ease" style-hover="transform:translateY(-4px); box-shadow:0 14px 30px rgba(46,70,53,0.12)">
-          <div style="height:26px; display:flex; align-items:center; margin-bottom:16px"><div style="position:relative; width:24px; height:24px"><div style="position:absolute;top:1px;left:4px;width:17px;height:21px;border:1.7px solid #3E6147;border-radius:4px 4px 10px 10px"></div><div style="position:absolute;top:11px;left:7px;width:5px;height:0;border-top:1.5px solid #3E6147;transform:rotate(42deg)"></div><div style="position:absolute;top:10px;left:10px;width:8px;height:0;border-top:1.5px solid #3E6147;transform:rotate(-42deg)"></div></div></div>
-          <div style="font-size:16.5px; color:#2B3A30; margin-bottom:7px">Trauma &amp; PTSD</div>
-          <div style="font-size:14px; line-height:1.65; color:#5C6B60">Healing from painful experiences takes time. Sarthya offers a gentle, safe first space.</div>
-          <div style="margin-top:16px; font-size:13px; color:#6B5726; letter-spacing:0.06em">5 questions →</div>
-        </div>
+      <div class="sa-grid">
+        <div class="sa-card" onclick="SA.openStress()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_20_58 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/01_stress_anxiety(1).png" alt=""/><div class="sa-title">Stress &amp; Anxiety</div><div class="sa-desc">Explore what's been feeling overwhelming and what might help.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openCareer()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_20_47 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/02_career_confusion(1).png" alt=""/><div class="sa-title">Career Confusion</div><div class="sa-desc">Explore what you want, what's holding you back, and possible directions.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openRelationship()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_21_53 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/03_relationships(1).png" alt=""/><div class="sa-title">Relationships</div><div class="sa-desc">Think through relationships, boundaries, conflict or heartbreak.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openLoneliness()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_21_31 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/04_loneliness(1).png" alt=""/><div class="sa-title">Loneliness</div><div class="sa-desc">Explore feelings of disconnection and what you may be needing.</div><div class="sa-link">Explore <span>→</span></div></div></div>
       </div>
-      <div style="margin-top:22px; font-size:13.5px; line-height:1.7; color:#5C6B60">These check-ins are for reflection only. They are not a diagnosis.</div>
+      <div class="sa-grid">
+        <div class="sa-card" onclick="SA.openGrowth()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_21_08 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/05_personal_growth(1).png" alt=""/><div class="sa-title">Personal Growth</div><div class="sa-desc">Reflect on habits, confidence, goals and the person you want to become.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openStudent()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_21_39 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/06_student_life(1).png" alt=""/><div class="sa-title">Student Life</div><div class="sa-desc">Explore studies, pressure, expectations, identity and campus life.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openLoss()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_22_22 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/07_loss_grief(1).png" alt=""/><div class="sa-title">Loss &amp; Grief</div><div class="sa-desc">Make space for loss and understand what you're experiencing.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+        <div class="sa-card" onclick="SA.openPtsd()"><div class="sa-img-wrap"><img class="sa-img" src="assets/ChatGPT Image Sep 20, 2026, 03_22_06 PM.png" alt=""/></div><div class="sa-body"><img class="sa-icon" src="assets/08_difficult_experiences(1).png" alt=""/><div class="sa-title">Difficult Experiences</div><div class="sa-desc">Gently explore experiences that are still affecting you.</div><div class="sa-link">Explore <span>→</span></div></div></div>
+      </div>
+      <div class="sa-bottom">
+        <div class="sa-bottom-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E4635" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="sa-bottom-text"><div class="sa-bottom-title">Not sure where to begin?</div><div class="sa-bottom-desc">You can also just talk to Sarthyaa. Share what's on your mind, and we'll help you find the right place to start.</div></div>
+        <button class="sa-bottom-btn" onclick="SA.startChat()">Talk to Sarthyaa →</button>
+      </div>
+      <div style="margin-top:24px; font-size:13px; color:#8A9E90; display:flex; align-items:center; gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A9E90" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>These guided reflections are designed to help you explore what's on your mind. They are not tests or diagnoses.</div>
     </div>
   </div>
 
@@ -1293,8 +1274,20 @@ var SA = (function () {
 <script>
 (function(){
   var SUPABASE_URL='https://mgmqckeyfrpmzmvsdisg.supabase.co';
-  var SUPABASE_ANON_KEY='YOUR_ANON_KEY_HERE';
+  var SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nbXFja2V5ZnJwbXptdnNkaXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3OTMzMzIsImV4cCI6MjEwNDM2OTMzMn0.Ci3fxjoZ-b6qX_HL1IOfBXJFvAefs60OjEsk6_hzVxo';
   var sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  var dropdown=document.createElement('div');
+  dropdown.id='auth-dropdown';
+  dropdown.style.cssText='display:none;position:fixed;top:64px;right:clamp(16px,4vw,56px);background:#FFFFFF;border:1px solid rgba(46,70,53,0.12);border-radius:14px;box-shadow:0 16px 48px rgba(46,70,53,0.18);z-index:200;min-width:180px;overflow:hidden';
+  dropdown.innerHTML='<div id="dd-name" style="padding:14px 18px 10px;font-size:13px;font-weight:500;color:#2B3A30;border-bottom:1px solid rgba(46,70,53,0.08)"></div><div onclick="window.authSignOut()" style="padding:12px 18px;font-size:13.5px;color:#2B3A30;cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background='#F3EFE6'" onmouseleave="this.style.background='transparent'">Sign Out</div>';
+  document.body.appendChild(dropdown);
+  document.addEventListener('click',function(e){
+    var wrap=document.getElementById('nav-auth');
+    if(wrap&&!wrap.contains(e.target)&&!dropdown.contains(e.target)){dropdown.style.display='none';}
+  });
+  window.authSignOut=function(){
+    sb.auth.signOut().then(function(){dropdown.style.display='none';updateNav(null);});
+  };
   function updateNav(session){
     var icon=document.getElementById('nav-auth-icon');
     var nameEl=document.getElementById('nav-auth-name');
@@ -1304,8 +1297,11 @@ var SA = (function () {
       var name=session.user.user_metadata&&session.user.user_metadata.full_name?session.user.user_metadata.full_name:session.user.email.split('@')[0];
       var first=name.split(' ')[0];
       icon.style.display='none';nameEl.style.display='block';nameEl.textContent=first;wrap.style.padding='0 14px';
+      document.getElementById('dd-name').textContent='Signed in as '+first;
+      wrap.onclick=function(e){e.stopPropagation();dropdown.style.display=dropdown.style.display==='none'?'block':'none';};
     }else{
-      icon.style.display='block';nameEl.style.display='none';wrap.style.padding='0 8px';
+      icon.style.display='block';nameEl.style.display='none';wrap.style.padding='0 8px';dropdown.style.display='none';
+      wrap.onclick=function(){window.location.href='/login';};
     }
   }
   sb.auth.getSession().then(function(d){updateNav(d.data.session);});
@@ -1369,4 +1365,16 @@ if(mttHuman){
   mttHuman.addEventListener('mouseenter',function(){if(window.matchMedia('(hover:none)').matches)return;mttHuman.style.transform='scale(1.013)';mttHuman.style.filter='drop-shadow(0 6px 22px rgba(180,145,110,0.25))';if(mttAI)mttAI.style.opacity='0.85';});
   mttHuman.addEventListener('mouseleave',function(){if(window.matchMedia('(hover:none)').matches)return;mttHuman.style.transform='';mttHuman.style.filter='';if(mttAI)mttAI.style.opacity='1';});
 }
+
+// HOW IT WORKS scroll reveal
+(function(){
+  var rows=document.querySelectorAll('.how-row');
+  if(!rows.length)return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';obs.unobserve(e.target);}
+    });
+  },{threshold:0.2});
+  rows.forEach(function(r){obs.observe(r);});
+})();
 </script>
