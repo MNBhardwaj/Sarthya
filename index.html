@@ -1275,7 +1275,9 @@ var SA = (function () {
 (function(){
   var SUPABASE_URL='https://mgmqckeyfrpmzmvsdisg.supabase.co';
   var SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1nbXFja2V5ZnJwbXptdnNkaXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3OTMzMzIsImV4cCI6MjEwNDM2OTMzMn0.Ci3fxjoZ-b6qX_HL1IOfBXJFvAefs60OjEsk6_hzVxo';
-  var sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  var sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
+    auth:{persistSession:true,storageKey:'sarthyaa-auth',storage:window.localStorage,autoRefreshToken:true,detectSessionInUrl:true}
+  });
   var dropdown=document.createElement('div');
   dropdown.id='auth-dropdown';
   dropdown.style.cssText='display:none;position:fixed;top:64px;right:clamp(16px,4vw,56px);background:#FFFFFF;border:1px solid rgba(46,70,53,0.12);border-radius:14px;box-shadow:0 16px 48px rgba(46,70,53,0.18);z-index:200;min-width:180px;overflow:hidden';
