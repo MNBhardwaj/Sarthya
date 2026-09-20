@@ -122,7 +122,7 @@
   </div>
 
   <!-- MORE THAN TECHNOLOGY -->
-  <div id="approach" style="position:relative; padding:clamp(56px,8vh,96px) clamp(20px,4vw,56px); background:#F8F2E8 url('assets/Seond PPage ackground.png') center/cover no-repeat; background-color:#F8F2E8; border-top:1px solid rgba(46,70,53,0.06)">
+  <div id="approach" style="position:relative; padding:clamp(56px,8vh,96px) clamp(20px,4vw,56px); background:#F8F2E8 url('assets/Seond%20PPage%20ackground.png') center/cover no-repeat; background-color:#F8F2E8; border-top:1px solid rgba(46,70,53,0.06)">
     <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(36px,5vw,72px); align-items:center">
 
       <!-- LEFT -->
@@ -131,8 +131,8 @@
         <div style="width:56px; height:1.5px; background:#C2A265; margin-bottom:clamp(28px,4vh,44px); transform-origin:left; animation:ruleGrow 1s cubic-bezier(0.16,1,0.3,1) both"></div>
         <div style="position:relative; display:inline-block" id="mttStoryWrap">
           <div id="mttStoryBtn" onclick="mttToggleStory()" style="display:inline-flex; white-space:nowrap; align-items:center; gap:12px; padding:15px 30px; border-radius:999px; background:#2E4635; color:#F6F2E9; font-size:15px; cursor:pointer; box-shadow:0 10px 26px rgba(46,70,53,0.2); transition:background 0.3s ease, transform 0.3s ease" style-hover="background:#3C5A44; transform:translateY(-2px)">Our Story <span style="font-size:14px">→</span></div>
-          <div id="mttStoryReveal" style="position:absolute; top:calc(100% + 4px); left:0; width:min(380px,90vw); overflow:hidden; max-height:0; opacity:0; transform:translateY(-6px); pointer-events:none; transition:max-height 0.65s cubic-bezier(0.22,1,0.36,1), opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1); z-index:20">
-            <div style="padding:24px 0 4px">
+          <div id="mttStoryReveal" style="position:absolute; top:calc(100% + 8px); left:0; width:min(380px,90vw); max-height:70vh; overflow-y:auto; background:#FAF7F1; border-radius:20px; box-shadow:0 20px 60px rgba(24,38,28,0.2); border:1px solid rgba(46,70,53,0.08); opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity 0.45s cubic-bezier(0.22,1,0.36,1), transform 0.45s cubic-bezier(0.22,1,0.36,1); z-index:50; padding:28px 28px 28px">
+            <div style="padding:0 0 4px">
               <div style="font-family:'Cormorant Garamond',serif; font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#C2A265; font-weight:700; margin-bottom:14px">Why Sarthyaa?</div>
               <div style="font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:500; color:#2B3A30; line-height:1.9; margin-bottom:20px; font-style:italic">"I never wanted to build another platform that waits for someone to fall apart before offering help.<br/><br/>People are surrounded by information, advice and expectations — yet during some of the most important moments of life, they are often left to navigate alone.<br/><br/>Sarthyaa was built around a simple idea: guidance should help you see more clearly, without taking your choices away from you."</div>
               <a href="#founder" style="font-family:'Jost',sans-serif; font-size:13px; letter-spacing:0.1em; color:#2E4635; font-weight:600; text-decoration:none; border-bottom:1.5px solid rgba(46,70,53,0.35); padding-bottom:2px">Read the Founder's Story →</a>
@@ -1318,8 +1318,13 @@ var SA = (function () {
 var mttStoryOpen=false,mttStoryTimer;
 function mttToggleStory(){
   var r=document.getElementById('mttStoryReveal');if(!r)return;
-  if(mttStoryOpen){r.style.maxHeight='0';r.style.opacity='0';r.style.transform='translateY(-6px)';r.style.pointerEvents='none';mttStoryOpen=false;}
-  else{r.style.maxHeight='600px';r.style.opacity='1';r.style.transform='translateY(0)';r.style.pointerEvents='auto';mttStoryOpen=true;}
+  if(mttStoryOpen){
+    r.style.opacity='0';r.style.transform='translateY(-6px)';r.style.pointerEvents='none';
+    mttStoryOpen=false;
+  } else {
+    r.style.opacity='1';r.style.transform='translateY(0)';r.style.pointerEvents='auto';
+    mttStoryOpen=true;
+  }
 }
 var mttWrap=document.getElementById('mttStoryWrap');
 if(mttWrap){
@@ -1327,13 +1332,13 @@ if(mttWrap){
     if(window.matchMedia('(hover:none)').matches)return;
     clearTimeout(mttStoryTimer);
     var r=document.getElementById('mttStoryReveal');
-    if(r){r.style.maxHeight='600px';r.style.opacity='1';r.style.transform='translateY(0)';r.style.pointerEvents='auto';mttStoryOpen=true;}
+    if(r){r.style.opacity='1';r.style.transform='translateY(0)';r.style.pointerEvents='auto';mttStoryOpen=true;}
   });
   mttWrap.addEventListener('mouseleave',function(){
     if(window.matchMedia('(hover:none)').matches)return;
     mttStoryTimer=setTimeout(function(){
       var r=document.getElementById('mttStoryReveal');
-      if(r){r.style.maxHeight='0';r.style.opacity='0';r.style.transform='translateY(-6px)';r.style.pointerEvents='none';mttStoryOpen=false;}
+      if(r){r.style.opacity='0';r.style.transform='translateY(-6px)';r.style.pointerEvents='none';mttStoryOpen=false;}
     },150);
   });
 }
