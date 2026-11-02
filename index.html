@@ -1281,7 +1281,7 @@ var SA = (function () {
   var dropdown=document.createElement('div');
   dropdown.id='auth-dropdown';
   dropdown.style.cssText='display:none;position:fixed;top:64px;right:clamp(16px,4vw,56px);background:#FFFFFF;border:1px solid rgba(46,70,53,0.12);border-radius:14px;box-shadow:0 16px 48px rgba(46,70,53,0.18);z-index:200;min-width:180px;overflow:hidden';
-  dropdown.innerHTML='<div id="dd-name" style="padding:14px 18px 10px;font-size:13px;font-weight:500;color:#2B3A30;border-bottom:1px solid rgba(46,70,53,0.08)"></div><div onclick="window.authSignOut()" style="padding:12px 18px;font-size:13.5px;color:#2B3A30;cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background='#F3EFE6'" onmouseleave="this.style.background='transparent'">Sign Out</div>';
+  dropdown.innerHTML='<div id="dd-name" style="padding:14px 18px 10px;font-size:13px;font-weight:500;color:#2B3A30;border-bottom:1px solid rgba(46,70,53,0.08)"></div><div onclick="window.authSignOut()" style="padding:12px 18px;font-size:13.5px;color:#2B3A30;cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background=\'#F3EFE6\'" onmouseleave="this.style.background=\'transparent\'">Sign Out</div>';
   document.body.appendChild(dropdown);
   document.addEventListener('click',function(e){
     var wrap=document.getElementById('nav-auth');
